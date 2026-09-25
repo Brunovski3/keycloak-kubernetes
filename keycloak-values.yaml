@@ -1,0 +1,40 @@
+command:
+  - /opt/keycloak/bin/kc.sh
+  - start
+  - --http-enabled=true
+  - --http-port=8080
+  - --health-enabled=true
+  - --metrics-enabled=true
+  - --hostname-strict=false
+  - --proxy-headers=xforwarded
+
+http:
+  relativePath: "/"
+
+extraEnv: |
+  - name: KC_BOOTSTRAP_ADMIN_USERNAME
+    value: admin
+  - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-admin
+        key: password
+  - name: KC_HOSTNAME
+    value: https://keycloak.ling-becrux.ts.net
+  - name: KC_DB
+    value: postgres
+  - name: KC_DB_URL
+    value: jdbc:postgresql://keycloak-postgres.keycloak.svc.cluster.local:5432/keycloak
+  - name: KC_DB_USERNAME
+    value: keycloak
+  - name: KC_DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-db
+        key: password
+
+service:
+  httpPort: 8080
+
+ingress:
+  enabled: false

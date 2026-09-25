@@ -1,0 +1,20 @@
+replicas: 1
+
+proxyHeaders: xforwarded
+
+extraEnv: |
+  - name: KC_BOOTSTRAP_ADMIN_USERNAME
+    value: admin
+  - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: keycloak-admin
+        key: password
+  - name: KC_DB
+    value: dev-file
+
+service:
+  type: ClusterIP
+
+ingress:
+  enabled: false

@@ -1,0 +1,9 @@
+# Export cru do servidor OCI (puxado por scripts/pull-from-server.sh)
+local-export/
+
+# Segredos por qualquer nome
+*secret*
+*token*
+*.key
+*.pem
+credentials*.yaml

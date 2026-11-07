@@ -25,11 +25,16 @@ A parte que mais me interessa é o **Zero Trust de verdade**: não existe caminh
 
 ## Estrutura do repositório
 
-| Arquivo | O que é |
+| Diretório | O que é |
 | --- | --- |
 | `keycloak-values.yaml` | Values do chart do Keycloak em produção: Postgres, `KC_HOSTNAME`, proxy headers e ingress desativado |
 | `values.yaml` | Values enxutos pra subir rápido em dev/teste (`KC_DB=dev-file`, sem Postgres) |
 | `postgres.yaml` | Service + StatefulSet do PostgreSQL 17 (namespace `keycloak`, PVC de 5Gi) |
+| `cluster/` | `config.yaml` do k3s, installer e roles dos nós |
+| `networking/traefik/` | Ingress controller e TLS |
+| `networking/tailscale/` | Operator do Tailscale e o ProxyGroup que publica os serviços em HTTPS privado |
+| `apps/` | Helm releases dos workloads (n8n, e o Keycloak acima, quando migrar pra cá) |
+| `scripts/pull-from-server.sh` | rsync dos autodeploy manifests do servidor da OCI pra revisão local (`local-export/`, fora do Git). Marca segredos na varredura; nada sensível é commitado |
 | `docs/` | Diagrama da arquitetura e prints do Komodo/Keycloak |
 
 ## Arquitetura
